@@ -18,7 +18,10 @@ def _show_error(msg):
         msg += f"\n\n로그: {path}"
     except Exception:
         pass
-    print(msg, file=sys.stderr)
+    try:
+        print(msg, file=sys.stderr)
+    except Exception:
+        pass
     if sys.platform == "win32":
         try:
             import ctypes
@@ -27,7 +30,17 @@ def _show_error(msg):
             pass
 
 
+def _safe_stdio():
+    """한글 출력이 cp1252 같은 콘솔에서 UnicodeEncodeError를 내지 않도록."""
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(errors="replace")
+        except Exception:
+            pass
+
+
 def main():
+    _safe_stdio()
     args = sys.argv[1:]
     smoke = 0
     shot = None

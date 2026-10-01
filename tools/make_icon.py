@@ -38,7 +38,7 @@ def main():
         offset += len(data)
     with open(os.path.join(out, "icon.ico"), "wb") as f:
         f.write(header + entries + b"".join(images))
-    print("아이콘 생성 완료:", out)
+    print("icon generated:", out)
 
 
 if __name__ == "__main__":
