@@ -1,0 +1,29 @@
+{
+  "_comment": "레시피. category=제작 건물 종류(buildings.json의 crafts), time=초(속도 1 기준), unlock=null|era:N|tech:ID",
+  "recipes": [
+    {"id": "smelt_iron",    "name": "철판",        "category": "smelter",  "inputs": {"iron_ore": 1},   "outputs": {"iron_plate": 1},   "time": 2.0,  "unlock": null},
+    {"id": "smelt_copper",  "name": "구리판",      "category": "smelter",  "inputs": {"copper_ore": 1}, "outputs": {"copper_plate": 1}, "time": 2.0,  "unlock": null},
+    {"id": "smelt_steel",   "name": "강철",        "category": "smelter",  "inputs": {"iron_plate": 5, "coal": 1}, "outputs": {"steel": 1}, "time": 8.0, "unlock": "tech:steel"},
+    {"id": "smelt_silicon", "name": "실리콘",      "category": "smelter",  "inputs": {"sand": 2, "coal": 1}, "outputs": {"silicon": 1}, "time": 4.0, "unlock": "tech:silicon"},
+
+    {"id": "gear",          "name": "톱니",        "category": "assembler", "inputs": {"iron_plate": 2}, "outputs": {"gear": 1},     "time": 1.5, "unlock": "era:2"},
+    {"id": "iron_rod",      "name": "철봉",        "category": "assembler", "inputs": {"iron_plate": 1}, "outputs": {"iron_rod": 2}, "time": 1.0, "unlock": "era:2"},
+    {"id": "wire",          "name": "전선",        "category": "assembler", "inputs": {"copper_plate": 1}, "outputs": {"wire": 2},   "time": 1.0, "unlock": "era:2"},
+    {"id": "red_pack",      "name": "빨강 연구팩", "category": "assembler", "inputs": {"copper_plate": 1, "gear": 1}, "outputs": {"red_pack": 1}, "time": 5.0, "unlock": "era:2"},
+
+    {"id": "motor",         "name": "모터",        "category": "assembler", "inputs": {"steel": 1, "gear": 2, "wire": 4}, "outputs": {"motor": 1}, "time": 6.0, "unlock": "era:3"},
+    {"id": "circuit",       "name": "회로기판",    "category": "assembler", "inputs": {"iron_plate": 1, "wire": 3}, "outputs": {"circuit": 1}, "time": 3.0, "unlock": "era:3"},
+    {"id": "green_pack",    "name": "초록 연구팩", "category": "assembler", "inputs": {"motor": 1, "circuit": 2}, "outputs": {"green_pack": 2}, "time": 10.0, "unlock": "era:3"},
+
+    {"id": "plc_module",    "name": "PLC 모듈",    "category": "assembler", "inputs": {"circuit": 2, "silicon": 1, "iron_rod": 2}, "outputs": {"plc_module": 1}, "time": 8.0, "unlock": "era:4"},
+    {"id": "blue_pack",     "name": "파랑 연구팩", "category": "assembler", "inputs": {"plc_module": 1, "steel": 2, "motor": 1}, "outputs": {"blue_pack": 2}, "time": 16.0, "unlock": "era:4"},
+
+    {"id": "refine_oil",    "name": "원유 정제",   "category": "refinery",  "inputs": {"crude_oil": 2}, "outputs": {"petroleum": 2}, "time": 4.0, "unlock": "tech:refining"},
+    {"id": "plastic",       "name": "플라스틱",    "category": "chemical",  "inputs": {"petroleum": 1, "coal": 1}, "outputs": {"plastic": 2}, "time": 3.0, "unlock": "tech:plastic"},
+    {"id": "nuclear_fuel",  "name": "핵연료봉",    "category": "chemical",  "inputs": {"uranium_ore": 5}, "outputs": {"nuclear_fuel": 1}, "time": 20.0, "unlock": "tech:nuclear"},
+    {"id": "semiconductor", "name": "반도체",      "category": "assembler", "inputs": {"silicon": 1, "plastic": 1, "wire": 2}, "outputs": {"semiconductor": 1}, "time": 6.0, "unlock": "tech:semiconductor"},
+    {"id": "inverter",      "name": "인버터",      "category": "assembler", "inputs": {"semiconductor": 2, "circuit": 2, "steel": 1}, "outputs": {"inverter": 1}, "time": 10.0, "unlock": "tech:semiconductor"},
+    {"id": "robot",         "name": "산업용 로봇", "category": "assembler", "inputs": {"motor": 2, "plc_module": 1, "inverter": 1, "plastic": 4}, "outputs": {"robot": 1}, "time": 20.0, "unlock": "era:5"},
+    {"id": "purple_pack",   "name": "보라 연구팩", "category": "assembler", "inputs": {"robot": 1, "semiconductor": 2}, "outputs": {"purple_pack": 3}, "time": 24.0, "unlock": "era:5"}
+  ]
+}

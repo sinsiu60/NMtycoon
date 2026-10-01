@@ -1,0 +1,31 @@
+{
+  "_comment": "아이템 정의. value=출하장 판매가($), shape=그리기 모양(sprites.py), tier=등장 시대",
+  "items": [
+    {"id": "iron_ore",      "name": "철광석",      "tier": 1, "value": 1,   "color": [140, 150, 170], "shape": "ore"},
+    {"id": "copper_ore",    "name": "구리광석",    "tier": 1, "value": 1,   "color": [205, 115, 60],  "shape": "ore"},
+    {"id": "coal",          "name": "석탄",        "tier": 1, "value": 1,   "color": [45, 45, 50],    "shape": "ore", "fuel": 2000},
+    {"id": "iron_plate",    "name": "철판",        "tier": 1, "value": 3,   "color": [185, 195, 210], "shape": "plate"},
+    {"id": "copper_plate",  "name": "구리판",      "tier": 1, "value": 3,   "color": [230, 135, 70],  "shape": "plate"},
+    {"id": "gear",          "name": "톱니",        "tier": 2, "value": 7,   "color": [165, 170, 180], "shape": "gear"},
+    {"id": "iron_rod",      "name": "철봉",        "tier": 2, "value": 2,   "color": [150, 155, 175], "shape": "rod"},
+    {"id": "wire",          "name": "전선",        "tier": 2, "value": 2,   "color": [235, 155, 60],  "shape": "wire"},
+    {"id": "red_pack",      "name": "빨강 연구팩", "tier": 2, "value": 15,  "color": [225, 55, 55],   "shape": "pack"},
+    {"id": "steel",         "name": "강철",        "tier": 3, "value": 20,  "color": [105, 115, 140], "shape": "plate"},
+    {"id": "motor",         "name": "모터",        "tier": 3, "value": 60,  "color": [90, 115, 170],  "shape": "box"},
+    {"id": "circuit",       "name": "회로기판",    "tier": 3, "value": 15,  "color": [40, 165, 75],   "shape": "chip"},
+    {"id": "green_pack",    "name": "초록 연구팩", "tier": 3, "value": 50,  "color": [60, 205, 85],   "shape": "pack"},
+    {"id": "sand",          "name": "규사",        "tier": 4, "value": 1,   "color": [225, 205, 145], "shape": "ore"},
+    {"id": "silicon",       "name": "실리콘",      "tier": 4, "value": 10,  "color": [150, 150, 195], "shape": "disc"},
+    {"id": "plc_module",    "name": "PLC 모듈",    "tier": 4, "value": 80,  "color": [70, 70, 85],    "shape": "chip"},
+    {"id": "blue_pack",     "name": "파랑 연구팩", "tier": 4, "value": 130, "color": [60, 115, 235],  "shape": "pack"},
+    {"id": "crude_oil",     "name": "원유",        "tier": 5, "value": 3,   "color": [35, 30, 40],    "shape": "barrel"},
+    {"id": "petroleum",     "name": "석유 연료",   "tier": 5, "value": 4,   "color": [175, 105, 45],  "shape": "barrel", "fuel": 5000},
+    {"id": "plastic",       "name": "플라스틱",    "tier": 5, "value": 4,   "color": [238, 238, 245], "shape": "plate"},
+    {"id": "semiconductor", "name": "반도체",      "tier": 5, "value": 35,  "color": [95, 80, 140],   "shape": "chip"},
+    {"id": "inverter",      "name": "인버터",      "tier": 5, "value": 180, "color": [205, 185, 60],  "shape": "box"},
+    {"id": "robot",         "name": "산업용 로봇", "tier": 5, "value": 600, "color": [245, 165, 40],  "shape": "robot"},
+    {"id": "purple_pack",   "name": "보라 연구팩", "tier": 5, "value": 300, "color": [165, 75, 210],  "shape": "pack"},
+    {"id": "uranium_ore",   "name": "우라늄광석",  "tier": 5, "value": 4,   "color": [110, 205, 80],  "shape": "ore"},
+    {"id": "nuclear_fuel",  "name": "핵연료봉",    "tier": 5, "value": 60,  "color": [90, 245, 90],   "shape": "rod", "fuel": 600000}
+  ]
+}

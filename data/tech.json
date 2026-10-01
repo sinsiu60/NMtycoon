@@ -1,0 +1,46 @@
+{
+  "_comment": "연구 노드. era=연구 가능해지는 시대, packs=연구 1단위당 필요한 연구팩(각 1개), units=단위 수, unit_time=단위당 초. effects: craft_speed/mining_speed/gen_output(+비율), flag(기능 해금). 건물/레시피 해금은 그쪽 JSON의 unlock=tech:ID 로 연결",
+  "fields": [
+    {"id": "logistics", "name": "물류", "icon": "📦"},
+    {"id": "production", "name": "생산", "icon": "⚙"},
+    {"id": "power", "name": "전력", "icon": "⚡"},
+    {"id": "control", "name": "제어", "icon": "🎛"},
+    {"id": "materials", "name": "소재", "icon": "🧪"}
+  ],
+  "techs": [
+    {"id": "splitter",        "name": "분배기",            "field": "logistics",  "era": 2, "prereqs": [], "packs": ["red_pack"], "units": 20, "unit_time": 5, "desc": "분배기 해금"},
+    {"id": "productivity_1",  "name": "생산 효율 I",       "field": "production", "era": 2, "prereqs": [], "packs": ["red_pack"], "units": 30, "unit_time": 5, "effects": {"craft_speed": 0.15}, "desc": "모든 제작 속도 +15%"},
+    {"id": "power_meter",     "name": "전력 계측기",       "field": "power",      "era": 2, "prereqs": [], "packs": ["red_pack"], "units": 15, "unit_time": 5, "effects": {"flag": "power_meter"}, "desc": "전력 그래프 창(P키) 해금"},
+    {"id": "steel",           "name": "강철",              "field": "materials",  "era": 3, "prereqs": [], "packs": ["red_pack"], "units": 50, "unit_time": 6, "desc": "제련로 강철 레시피 (모터 재료)"},
+
+    {"id": "fast_belt",       "name": "고속 벨트",         "field": "logistics",  "era": 3, "prereqs": ["splitter"], "packs": ["red_pack", "green_pack"], "units": 40, "unit_time": 8, "desc": "벨트 Mk2 해금"},
+    {"id": "underground",     "name": "지하 벨트",         "field": "logistics",  "era": 3, "prereqs": ["splitter"], "packs": ["red_pack", "green_pack"], "units": 30, "unit_time": 8, "desc": "지하 벨트 입구/출구 해금"},
+    {"id": "miner_mk2",       "name": "채굴기 Mk2",        "field": "production", "era": 3, "prereqs": ["productivity_1"], "packs": ["red_pack", "green_pack"], "units": 50, "unit_time": 8, "desc": "채굴기 Mk2 해금"},
+    {"id": "steam_turbine",   "name": "증기터빈",          "field": "power",      "era": 3, "prereqs": ["power_meter"], "packs": ["red_pack", "green_pack"], "units": 60, "unit_time": 8, "desc": "증기터빈 해금"},
+    {"id": "transmission",    "name": "변압기·철탑",       "field": "power",      "era": 3, "prereqs": ["power_meter"], "packs": ["red_pack", "green_pack"], "units": 40, "unit_time": 8, "desc": "장거리 송전 해금"},
+    {"id": "auto_reclose",    "name": "차단기 Mk2",        "field": "control",    "era": 3, "prereqs": [], "packs": ["red_pack", "green_pack"], "units": 40, "unit_time": 8, "effects": {"flag": "auto_reclose"}, "desc": "트립 5초 후 자동 재투입"},
+
+    {"id": "silicon",         "name": "실리콘",            "field": "materials",  "era": 4, "prereqs": ["steel"], "packs": ["red_pack", "green_pack"], "units": 60, "unit_time": 10, "desc": "제련로 실리콘 레시피 (규사+석탄)"},
+    {"id": "filter_splitter", "name": "필터 분배기",       "field": "logistics",  "era": 4, "prereqs": ["fast_belt"], "packs": ["red_pack", "green_pack", "blue_pack"], "units": 60, "unit_time": 10, "desc": "필터 분배기 해금"},
+    {"id": "assembler_mk2",   "name": "조립기 Mk2",        "field": "production", "era": 4, "prereqs": ["miner_mk2"], "packs": ["red_pack", "green_pack", "blue_pack"], "units": 80, "unit_time": 10, "desc": "조립기 Mk2 해금"},
+    {"id": "solar",           "name": "태양광",            "field": "power",      "era": 4, "prereqs": ["steam_turbine"], "packs": ["red_pack", "green_pack", "blue_pack"], "units": 60, "unit_time": 10, "desc": "태양광 패널 해금"},
+    {"id": "battery",         "name": "배터리",            "field": "power",      "era": 4, "prereqs": ["solar"], "packs": ["red_pack", "green_pack", "blue_pack"], "units": 60, "unit_time": 10, "desc": "배터리 해금"},
+    {"id": "sensors",         "name": "센서·릴레이",       "field": "control",    "era": 4, "prereqs": ["auto_reclose"], "packs": ["red_pack", "green_pack"], "units": 40, "unit_time": 10, "desc": "근접 센서, 릴레이, 신호선(L키) 해금"},
+    {"id": "plc",             "name": "PLC",               "field": "control",    "era": 4, "prereqs": ["sensors"], "packs": ["red_pack", "green_pack", "blue_pack"], "units": 60, "unit_time": 10, "desc": "PLC + 래더 편집기 해금"},
+    {"id": "priority_shed",   "name": "우선순위 차단",     "field": "control",    "era": 4, "prereqs": ["auto_reclose"], "packs": ["red_pack", "green_pack", "blue_pack"], "units": 50, "unit_time": 10, "effects": {"flag": "priority_shed"}, "desc": "과부하 시 트립 대신 '낮음' 우선순위 기계부터 차단"},
+
+    {"id": "refining",        "name": "정유",              "field": "materials",  "era": 5, "prereqs": ["silicon"], "packs": ["red_pack", "green_pack", "blue_pack"], "units": 80, "unit_time": 12, "desc": "원유 펌프, 정유소 해금"},
+    {"id": "plastic",         "name": "플라스틱",          "field": "materials",  "era": 5, "prereqs": ["refining"], "packs": ["red_pack", "green_pack", "blue_pack"], "units": 60, "unit_time": 12, "desc": "화학공장, 플라스틱 해금"},
+    {"id": "semiconductor",   "name": "반도체",            "field": "materials",  "era": 5, "prereqs": ["plastic"], "packs": ["red_pack", "green_pack", "blue_pack"], "units": 80, "unit_time": 12, "desc": "반도체, 인버터 레시피 해금"},
+    {"id": "gas_turbine",     "name": "가스터빈",          "field": "power",      "era": 5, "prereqs": ["battery", "refining"], "packs": ["red_pack", "green_pack", "blue_pack"], "units": 80, "unit_time": 12, "desc": "가스터빈 해금"},
+    {"id": "express_belt",    "name": "초고속 벨트",       "field": "logistics",  "era": 5, "prereqs": ["filter_splitter"], "packs": ["red_pack", "green_pack", "blue_pack", "purple_pack"], "units": 100, "unit_time": 12, "desc": "벨트 Mk3 해금"},
+    {"id": "assembler_mk3",   "name": "조립기 Mk3",        "field": "production", "era": 5, "prereqs": ["assembler_mk2"], "packs": ["red_pack", "green_pack", "blue_pack", "purple_pack"], "units": 120, "unit_time": 12, "desc": "조립기 Mk3 해금"},
+    {"id": "miner_mk3",       "name": "채굴기 Mk3",        "field": "production", "era": 5, "prereqs": ["assembler_mk2"], "packs": ["red_pack", "green_pack", "blue_pack", "purple_pack"], "units": 100, "unit_time": 12, "desc": "채굴기 Mk3 해금"},
+    {"id": "nuclear",         "name": "원자력",            "field": "power",      "era": 5, "prereqs": ["gas_turbine"], "packs": ["red_pack", "green_pack", "blue_pack", "purple_pack"], "units": 150, "unit_time": 12, "desc": "원자로, 핵연료봉 해금 (우라늄은 채굴기로)"},
+    {"id": "smart_grid",      "name": "스마트 그리드",     "field": "control",    "era": 5, "prereqs": ["priority_shed", "plc"], "packs": ["red_pack", "green_pack", "blue_pack", "purple_pack"], "units": 100, "unit_time": 12, "effects": {"flag": "smart_grid", "gen_output": 0.1}, "desc": "트립 없이 자동 부하 밸런싱, 발전량 +10%"},
+
+    {"id": "inf_craft",       "name": "생산 속도 강화",    "field": "production", "era": 7, "prereqs": [], "packs": ["red_pack", "green_pack", "blue_pack", "purple_pack"], "units": 100, "unit_time": 15, "repeatable": true, "effects": {"craft_speed": 0.1}, "desc": "제작 속도 +10% (반복 연구, 단계마다 비용 증가)"},
+    {"id": "inf_mining",      "name": "채굴 속도 강화",    "field": "production", "era": 7, "prereqs": [], "packs": ["red_pack", "green_pack", "blue_pack", "purple_pack"], "units": 100, "unit_time": 15, "repeatable": true, "effects": {"mining_speed": 0.1}, "desc": "채굴 속도 +10% (반복 연구)"},
+    {"id": "inf_power",       "name": "발전 효율 강화",    "field": "power",      "era": 7, "prereqs": [], "packs": ["red_pack", "green_pack", "blue_pack", "purple_pack"], "units": 100, "unit_time": 15, "repeatable": true, "effects": {"gen_output": 0.1}, "desc": "발전기 최대 출력 +10% (반복 연구)"}
+  ]
+}

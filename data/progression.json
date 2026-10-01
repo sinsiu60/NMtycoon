@@ -1,0 +1,31 @@
+{
+  "_comment": "시대·마일스톤·메가 프로젝트·주문 의뢰 설정. milestone.produce = 누적 생산량 목표",
+  "start_money": 1500,
+  "eras": [
+    {"era": 1, "name": "T1 기초 산업",  "milestone": {"produce": {"iron_plate": 300, "copper_plate": 200}}, "desc": "광석을 캐서 판을 만들어 팔자"},
+    {"era": 2, "name": "T2 기계화",     "milestone": {"produce": {"gear": 300, "red_pack": 150}}, "desc": "조립기로 부품을 만들고 연구를 시작"},
+    {"era": 3, "name": "T3 전기화",     "milestone": {"produce": {"steel": 200, "motor": 150, "green_pack": 200}}, "desc": "모터·회로기판 생산, 전력망 확장"},
+    {"era": 4, "name": "T4 자동 제어",  "milestone": {"produce": {"plc_module": 100, "blue_pack": 200}}, "desc": "센서·PLC로 라인을 제어"},
+    {"era": 5, "name": "T5 첨단 소재",  "milestone": {"produce": {"robot": 30, "purple_pack": 150}}, "desc": "플라스틱·반도체·로봇"},
+    {"era": 6, "name": "최종: 메가 프로젝트", "milestone": null, "desc": "무인 스마트 팩토리 코어를 완성하라"},
+    {"era": 7, "name": "엔딩 이후",     "milestone": null, "desc": "무한 연구로 공장을 끝없이 키우자"}
+  ],
+  "megaproject": {
+    "building": "core",
+    "stages": [
+      {"name": "1단계: 기초 프레임",   "items": {"steel": 1000, "motor": 400}},
+      {"name": "2단계: 제어 시스템",   "items": {"circuit": 1500, "plc_module": 300}},
+      {"name": "3단계: 전력 모듈",     "items": {"semiconductor": 500, "inverter": 200}},
+      {"name": "4단계: 자동화 유닛",   "items": {"robot": 150, "blue_pack": 300}}
+    ]
+  },
+  "orders": {
+    "max_active": 3,
+    "interval": 150,
+    "time_min": 360,
+    "time_max": 600,
+    "reward_mult": 2.5,
+    "reward_bonus_per_era": 100,
+    "base_value_target": 400
+  }
+}
