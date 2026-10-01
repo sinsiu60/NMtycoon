@@ -4,6 +4,11 @@ on:
   push:
     tags: ["v*"]
   workflow_dispatch:
+    inputs:
+      version:
+        description: "릴리즈 버전 태그 (예: v0.1.0)"
+        required: true
+        default: "v0.1.0"
 
 permissions:
   contents: write
@@ -12,6 +17,7 @@ jobs:
   build-windows:
     runs-on: windows-latest
     env:
+      VERSION: ${{ github.event.inputs.version || github.ref_name }}
       SDL_VIDEODRIVER: dummy
       SDL_AUDIODRIVER: dummy
     steps:
@@ -46,7 +52,7 @@ jobs:
         shell: pwsh
         run: |
           Copy-Item README.md dist\FactoryTycoon\README.md
-          $name = if ($env:GITHUB_REF_TYPE -eq "tag") { "FactoryTycoon-$env:GITHUB_REF_NAME-windows" } else { "FactoryTycoon-dev-windows" }
+          $name = "FactoryTycoon-$env:VERSION-windows"
           Compress-Archive -Path dist\FactoryTycoon -DestinationPath "$name.zip"
           echo "ZIP=$name.zip" >> $env:GITHUB_ENV
 
@@ -56,16 +62,17 @@ jobs:
           path: ${{ env.ZIP }}
 
       - name: Publish GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.VERSION }}
+          target_commitish: ${{ github.sha }}
           files: ${{ env.ZIP }}
-          name: 공장 자동화 타이쿤 ${{ github.ref_name }}
+          name: 공장 자동화 타이쿤 ${{ env.VERSION }}
           body: |
-            ## 공장 자동화 타이쿤 ${{ github.ref_name }} (Windows)
+            ## 공장 자동화 타이쿤 ${{ env.VERSION }} (Windows)
 
             **실행 방법**
-            1. 아래 `FactoryTycoon-${{ github.ref_name }}-windows.zip` 다운로드
+            1. 아래 `FactoryTycoon-${{ env.VERSION }}-windows.zip` 다운로드
             2. 압축을 풀고 `FactoryTycoon\FactoryTycoon.exe` 실행 (Python 설치 불필요)
             3. 세이브는 `내 문서\FactoryTycoon` 에 저장됩니다
 
