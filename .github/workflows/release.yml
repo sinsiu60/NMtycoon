@@ -1,0 +1,81 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    env:
+      SDL_VIDEODRIVER: dummy
+      SDL_AUDIODRIVER: dummy
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt
+
+      - name: Tests
+        run: python -m pytest -q tests
+
+      - name: Generate icon
+        run: python tools/make_icon.py
+
+      - name: Build exe (PyInstaller onedir)
+        run: python -m PyInstaller --noconfirm --clean --noconsole --onedir --name FactoryTycoon --icon assets\icon.ico --add-data "data;data" --add-data "assets;assets" main.py
+
+      - name: Smoke test built exe
+        shell: pwsh
+        run: |
+          $env:FACTORY_SAVE_DIR = "$env:RUNNER_TEMP\saves"
+          $p = Start-Process -FilePath dist\FactoryTycoon\FactoryTycoon.exe -ArgumentList "--smoke","60","--autostart" -PassThru -Wait
+          if ($p.ExitCode -ne 0) { Get-Content "$env:FACTORY_SAVE_DIR\crash.log" -ErrorAction SilentlyContinue; exit 1 }
+
+      - name: Package zip
+        shell: pwsh
+        run: |
+          Copy-Item README.md dist\FactoryTycoon\README.md
+          $name = if ($env:GITHUB_REF_TYPE -eq "tag") { "FactoryTycoon-$env:GITHUB_REF_NAME-windows" } else { "FactoryTycoon-dev-windows" }
+          Compress-Archive -Path dist\FactoryTycoon -DestinationPath "$name.zip"
+          echo "ZIP=$name.zip" >> $env:GITHUB_ENV
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FactoryTycoon-windows
+          path: ${{ env.ZIP }}
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.ZIP }}
+          name: 공장 자동화 타이쿤 ${{ github.ref_name }}
+          body: |
+            ## 공장 자동화 타이쿤 ${{ github.ref_name }} (Windows)
+
+            **실행 방법**
+            1. 아래 `FactoryTycoon-${{ github.ref_name }}-windows.zip` 다운로드
+            2. 압축을 풀고 `FactoryTycoon\FactoryTycoon.exe` 실행 (Python 설치 불필요)
+            3. 세이브는 `내 문서\FactoryTycoon` 에 저장됩니다
+
+            > 처음 보는 exe라 Windows SmartScreen이 경고할 수 있습니다: "추가 정보" → "실행"
+
+            **포함 내용**
+            - T1 기초 산업 ~ T5 첨단 소재, 5개 분야 연구 트리, 마일스톤·주문 의뢰
+            - 전력망·차단기 트립/복구, 변압기·철탑, 태양광·배터리·원자력, 스마트 그리드
+            - 센서·릴레이·PLC 래더 편집기 (A/B접점, 코일, TON, CTU, RST)
+            - 메가 프로젝트 "무인 스마트 팩토리 코어" → 엔딩 → 무한 연구
+            - 세이브 3슬롯 + 5분 자동 저장
+
+            조작법과 시작 가이드는 동봉된 README.md 를 참고하세요.
